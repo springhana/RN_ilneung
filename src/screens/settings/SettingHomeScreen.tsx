@@ -39,7 +39,7 @@ function SettingHomeScreen() {
     <SafeAreaView style={styles.container}>
       <StepField title="내 정보" bold onPress={handlePressNavigation} />
       <StepField title="다크 모드" bold onPress={darkModeOption.show} />
-      <StepField title="언어" bold onPress={languageCheckOption.show} />
+      <StepField title="번역 언어" bold onPress={languageCheckOption.show} />
       <StepField title="앱 정보" bold number="other" onPress={appInfo.show} />
 
       <View style={styles.appInfo}>
