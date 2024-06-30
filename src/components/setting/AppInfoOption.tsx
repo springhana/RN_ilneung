@@ -18,7 +18,8 @@ function AppInfoOption({isVisible, hideOption}: AppInfoOptionProps) {
       <CompoundOption.Background>
         <CompoundOption.Container>
           <CompoundOption.Button onPress={hideOption}>
-            이 앱은 일본어 JLPT 단어장입니다.
+            이 앱은 일본어 JLPT 단어장입니다. 번역 언어를 선택하여 해당 언어로
+            단어를 번역할 수 있습니다.
           </CompoundOption.Button>
         </CompoundOption.Container>
 
