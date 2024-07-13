@@ -3,7 +3,7 @@ import {Dimensions} from 'react-native';
 
 import {CompoundOption} from '../common/CompoundOption';
 import {ScrollView} from 'react-native-gesture-handler';
-import useLanguageStorage from '@/hooks/useLanguageStorage';
+import useLanguageStorage from '@/hooks/storage/useLanguageStorage';
 
 interface LangauageOptionProps {
   isVisible: boolean;
