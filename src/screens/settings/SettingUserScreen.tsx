@@ -1,12 +1,22 @@
 import BackButton from '@/components/common/BackButton';
+import CustomButton from '@/components/common/CustomButton';
 import InputField from '@/components/common/InputField';
 import {colors} from '@/constants/colors';
+import useUserInfoStorage from '@/hooks/storage/useUserInfoStorage';
 import useForm from '@/hooks/useForm';
 import useThemeStore from '@/store/useThemeStore';
 import {ThemeMode} from '@/types';
-import {validateNickName, validateTarget} from '@/utils';
-import React from 'react';
-import {StyleSheet, View, Image, Dimensions} from 'react-native';
+import {validateIntroduce, validateNickName} from '@/utils';
+import React, {useEffect} from 'react';
+import {
+  StyleSheet,
+  View,
+  Dimensions,
+  Text,
+  Keyboard,
+  TouchableWithoutFeedback,
+  SafeAreaView,
+} from 'react-native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 
 const deviceHeight = Dimensions.get('window').height;
@@ -15,19 +25,38 @@ function SettingUserScreen() {
   const {theme} = useThemeStore();
   const styles = styling(theme);
 
-  const nickName = useForm({
+  const targetNickName = useForm({
     initialValue: {name: ''},
     validate: validateNickName,
   });
-  const target = useForm({
-    initialValue: {target: ''},
-    validate: validateTarget,
+  const targetIntroduce = useForm({
+    initialValue: {introduce: ''},
+    validate: validateIntroduce,
   });
+
+  const {name, introduce, setUserInfo} = useUserInfoStorage();
+
+  useEffect(() => {
+    if (name && introduce) {
+      targetNickName.getTextInputProps('name').onChangeText(name);
+      targetIntroduce.getTextInputProps('introduce').onChangeText(introduce);
+    }
+  }, [name, introduce]);
+
+  const handlePressUserInfo = (name: string, introduce: string) => {
+    setUserInfo(name, introduce);
+  };
+
+  const dismissKeyboard = () => {
+    Keyboard.dismiss();
+  };
+
   return (
-    <View style={styles.container}>
-      <BackButton title="내 정보" />
-      <View style={styles.userInfoContainer}>
-        <View style={styles.userImageContainer}>
+    <TouchableWithoutFeedback onPress={dismissKeyboard}>
+      <SafeAreaView style={styles.container}>
+        <BackButton title="내 정보" />
+        <View style={styles.userInfoContainer}>
+          {/* <View style={styles.userImageContainer}>
           <Image
             source={require('@/assets/user-default.png')}
             style={styles.userImage}
@@ -39,27 +68,37 @@ function SettingUserScreen() {
               color={colors['light'].WHITE}
             />
           </View>
+        </View> */}
         </View>
-      </View>
-      <InputField
-        placeholder="닉네임을 입력해주세요."
-        error={nickName.errors.title}
-        touched={nickName.touched.title}
-        inputMode="text"
-        blurOnSubmit={false}
-        style={styles.input}
-        {...nickName.getTextInputProps('name')}
-      />
-      <InputField
-        placeholder="목표를 정해주세요."
-        error={target.errors.title}
-        touched={target.touched.title}
-        inputMode="text"
-        blurOnSubmit={false}
-        style={styles.input}
-        {...target.getTextInputProps('target')}
-      />
-    </View>
+        <InputField
+          placeholder={name}
+          error={targetNickName.errors.title}
+          touched={targetNickName.touched.title}
+          inputMode="text"
+          blurOnSubmit={false}
+          {...targetNickName.getTextInputProps('name')}
+        />
+        <InputField
+          placeholder={introduce}
+          error={targetIntroduce.errors.title}
+          touched={targetIntroduce.touched.title}
+          inputMode="text"
+          blurOnSubmit={false}
+          {...targetIntroduce.getTextInputProps('introduce')}
+        />
+
+        <CustomButton
+          onPress={() =>
+            handlePressUserInfo(
+              targetNickName.values.name,
+              targetIntroduce.values.introduce,
+            )
+          }
+          size="fit">
+          <Text>저장하기</Text>
+        </CustomButton>
+      </SafeAreaView>
+    </TouchableWithoutFeedback>
   );
 }
 
@@ -102,13 +141,6 @@ const styling = (theme: ThemeMode) =>
       backgroundColor: colors['light'].PINK_300,
       justifyContent: 'center',
       alignItems: 'center',
-    },
-    input: {
-      backgroundColor: colors[theme].WHITE,
-      fontWeight: 'bold',
-      color: colors[theme].GRAY_300,
-      borderRadius: 20,
-      padding: 10,
     },
   });
 
