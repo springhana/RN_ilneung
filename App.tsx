@@ -10,7 +10,7 @@ import Toast, {
   BaseToastProps,
 } from 'react-native-toast-message';
 import {colors} from '@/constants/colors';
-import useThemeStorage from '@/hooks/useThemeStorage';
+import useThemeStorage from '@/hooks/storage/useThemeStorage';
 
 const toastConfig = {
   success: (props: BaseToastProps) => (
