@@ -10,6 +10,7 @@ import {useNavigation} from '@react-navigation/native';
 import {Navigation} from '@/screens/quiz/QuizHomeScreen';
 import {Toast} from 'react-native-toast-message/lib/src/Toast';
 import Ionicons from 'react-native-vector-icons/Ionicons';
+import CustomButton from '../common/CustomButton';
 
 interface AnserQuizProps {
   jlpt: Word[];
@@ -45,21 +46,23 @@ function AnserQuiz({jlpt, currentStep, anserStep, onPress}: AnserQuizProps) {
   const handlePressAnser = (currentIndex: number, anser: number) => {
     setIsPress(true);
 
-    if (numberArray[currentIndex] === anser) {
-      Toast.show({
-        type: 'success',
-        text1: '정답입니다.',
-        position: 'top',
-        visibilityTime: 1000,
-      });
-    } else {
-      Toast.show({
-        type: 'error',
-        text1: '오답입니다.',
-        position: 'top',
-        visibilityTime: 1000,
-      });
-    }
+    setTimeout(() => {
+      if (numberArray[currentIndex] === anser) {
+        Toast.show({
+          type: 'success',
+          text1: '정답입니다.',
+          position: 'top',
+          visibilityTime: 1000,
+        });
+      } else {
+        Toast.show({
+          type: 'error',
+          text1: '오답입니다.',
+          position: 'top',
+          visibilityTime: 1000,
+        });
+      }
+    }, 10);
 
     setTimeout(() => {
       if (currentStep + 1 === numbers.QUIZ_NUMBER) {
@@ -77,8 +80,7 @@ function AnserQuiz({jlpt, currentStep, anserStep, onPress}: AnserQuizProps) {
         <View style={styles.Container}>
           {numberArray.map((item, index) => (
             <View key={index} style={styles.buttonContainer}>
-              <Pressable
-                style={styles.button}
+              <CustomButton
                 onPress={() => handlePressAnser(index, anserStep)}
                 disabled={isPress}>
                 <Text style={[styles.text]}>
@@ -91,7 +93,7 @@ function AnserQuiz({jlpt, currentStep, anserStep, onPress}: AnserQuizProps) {
                     color={colors['light'].WHITE}
                   />
                 )}
-              </Pressable>
+              </CustomButton>
             </View>
           ))}
         </View>
