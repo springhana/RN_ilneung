@@ -26,16 +26,16 @@ function validateNickName(values: {name: string}) {
   return errors;
 }
 
-function validateTarget(values: {target: string}) {
+function validateIntroduce(values: {introduce: string}) {
   const errors = {
-    target: '',
+    introduce: '',
   };
 
-  if (isBlank(values.target)) {
-    errors.target = '제목은 1~30자 이내로 입력해주세요.';
+  if (isBlank(values.introduce)) {
+    errors.introduce = '제목은 1~30자 이내로 입력해주세요.';
   }
 
   return errors;
 }
 
-export {validateSearch, validateNickName, validateTarget};
+export {validateSearch, validateNickName, validateIntroduce};
