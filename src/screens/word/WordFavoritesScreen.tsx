@@ -1,7 +1,7 @@
 import BackButton from '@/components/common/BackButton';
 import WordField from '@/components/word/WordField';
 import {colors} from '@/constants/colors';
-import useFavoritesStorage from '@/hooks/useFavoritesStorage';
+import useFavoritesStorage from '@/hooks/storage/useFavoritesStorage';
 import useThemeStore from '@/store/useThemeStore';
 import {ThemeMode} from '@/types';
 import React, {Fragment} from 'react';

@@ -15,7 +15,7 @@ import BackButton from '../../components/common/BackButton';
 import {ThemeMode} from '@/types';
 import {colors} from '@/constants/colors';
 import useThemeStore from '@/store/useThemeStore';
-import useFavoritesStorage from '@/hooks/useFavoritesStorage';
+import useFavoritesStorage from '@/hooks/storage/useFavoritesStorage';
 
 type StepListScreen = StackScreenProps<
   WordStackParamList,

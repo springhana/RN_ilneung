@@ -1,11 +1,4 @@
-import {
-  StyleSheet,
-  View,
-  SafeAreaView,
-  Image,
-  Text,
-  Dimensions,
-} from 'react-native';
+import {StyleSheet, View, SafeAreaView, Text, Dimensions} from 'react-native';
 import {
   DrawerContentComponentProps,
   DrawerContentScrollView,
@@ -17,6 +10,7 @@ import {validateSearch} from '../../utils';
 import {colors} from '../../constants/colors';
 import {ThemeMode} from '@/types';
 import useThemeStore from '@/store/useThemeStore';
+import useUserInfoStorage from '@/hooks/storage/useUserInfoStorage';
 
 const deviceHeight = Dimensions.get('window').height;
 
@@ -27,6 +21,7 @@ export default function CustomDraweContent(props: DrawerContentComponentProps) {
     initialValue: {title: ''},
     validate: validateSearch,
   });
+  const {name, introduce} = useUserInfoStorage();
 
   return (
     <SafeAreaView style={styles.container}>
@@ -35,17 +30,17 @@ export default function CustomDraweContent(props: DrawerContentComponentProps) {
         scrollEnabled={false}
         contentContainerStyle={styles.contentContainer}>
         <View style={styles.userInfoContainer}>
-          <View style={styles.userImageContainer}>
+          {/* <View style={styles.userImageContainer}>
             <Image
               source={require('@/assets/user-default.png')}
               style={styles.userImage}
             />
-          </View>
-          <Text style={styles.nameText}>봄이슝</Text>
+          </View> */}
+          <Text style={styles.nameText}>{name}</Text>
         </View>
         <View>
           <InputField
-            placeholder="N1을 정하자"
+            placeholder={introduce}
             error={search.errors.title}
             touched={search.touched.title}
             inputMode="text"
@@ -74,11 +69,11 @@ const styling = (theme: ThemeMode) =>
       marginTop: 15,
       marginLeft: 10,
     },
-    userImageContainer: {
-      width: 70,
-      height: 70,
-      borderRadius: 35,
-    },
+    // userImageContainer: {
+    //   width: 70,
+    //   height: 70,
+    //   borderRadius: 35,
+    // },
     userImage: {
       width: '100%',
       height: '100%',
